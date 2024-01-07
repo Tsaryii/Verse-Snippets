@@ -1,0 +1,40 @@
+
+
+-Primary Function
+
+GetForcedConversion(Number:int, Decimals: int)<suspends>:[]char=
+        var Suffix: string = ""
+        var FloatConverter: float = 1.0
+        var ConvertedScore: float = Number * FloatConverter
+        var PowMulti: float = 1.0
+        var Index: int = 0
+        var ActivePow: float = 1000.0
+        SuffixArray := array{"", "K", "M", "B", "T", "Qa","Qu"} #- Numbers Past Qu go beyond the 32 bit int limit.
+        loop:
+            if(ConvertedScore <= ActivePow):
+                if(Letter := SuffixArray[Index]):
+                    Print("{(ActivePow / 1000.0)}, {ConvertedScore / (ActivePow / 1000.0)}, {ActivePow}, {PowMulti}")
+                   set Suffix = "{ToTruncatedString(ConvertedScore / (ActivePow / 1000.0), Decimals)}{Letter}"
+                   break
+            else:
+                set PowMulti += 1.0
+                set Index += 1
+                set ActivePow = Pow(1000.0, PowMulti)
+            
+        return (Suffix)
+-Add these below required functions:
+FindCharIndex(SearchChar:char, Str:[]char)<transacts><decides>:int=
+    var FoundIndex:int = 0
+    var Found:logic = false
+    for (X -> Char : Str, not Found?):
+        if (Char = SearchChar):
+            set FoundIndex = X
+    FoundIndex
+
+ToTruncatedString(Number:float, Decimals:int):[]char=
+    var Str:[]char = ToString(Number)
+    if:
+        DotIndex := FindCharIndex['.', Str]
+        StopIndex := if (Decimals > 0) then Min(DotIndex+Decimals+1,Str.Length) else DotIndex
+        set Str = Str.Slice[0, StopIndex] 
+    Str              
