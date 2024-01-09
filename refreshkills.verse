@@ -29,7 +29,7 @@ DEVICENAME:=class(creative_device):
                             for (Player : Players):
                                 if(Agent:agent = agent[Player]):
                                     AgentStats := GetAgentStats(Agent)
-                                    if(AgentStats.TrackedElims > HighestKills):
+                                    if(AgentStats.TrackedElims >= HighestKills):
                                         set HighestKills = AgentStats.TrackedElims
                                         set HighestKillAgent = Agent
                                         KillLeader.Register(HighestKillAgent)
