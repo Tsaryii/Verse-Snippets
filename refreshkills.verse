@@ -15,6 +15,9 @@ using { /Fortnite.com/Game }
 DEVICENAME:=class(creative_device):
         @editable
                 KillLeader: player_reference_device = player_reference_device{}
+        OnBegin<override>()<suspends>:void={
+                spawn:
+                    RefreshKillLeader()
         RefreshKillLeader()<suspends>:void={
                 Players:=GetPlayspace().GetPlayers()
                 if(VoidPlayer := Players[0]): #Get the first player that exists
