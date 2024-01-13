@@ -27,7 +27,22 @@ BeFu<public> := module: #BetterFunctions aka BeFu: Library of Endless functions
     #BeFu.StringToMessage
     #converts any string to message type
 
+    PairedProbability<public>(Identifiers: []string, Input: []float):string={
+        var Value: string = ""
+        var Likeness: []float = Input
+        var Found: logic = false
+        var Odds: float = GetRandomFloat(0.0, 100.0)
+        for(Index := 0..Likeness.Length-1):
+            if(not Found?):
+                if(set Likeness[Index] = Likeness[Index] + Likeness[Index-1]){}
+                if(Odds <= Likeness[Index]):
+                    if(set Value = Identifiers[Index]){set Found = true}
+        
+        return Value
+        
 
+        
+    }
     IntToFloat<public>(value: int)<computes> : float = value*1.0
     #Converts any integer to a float
     #I.e 100 > 100.000000
